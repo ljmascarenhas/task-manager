@@ -1,3 +1,22 @@
+let db = firebase.firestore()
+
+function getCollection() {
+    db.collection("task").get().then( (querySnapshot) => {
+        querySnapshot.forEach(element => {
+            console.log(element.id)
+            console.log(element.data().title)
+            console.log(element.data().mode)
+            console.log(element.data().description)
+            let cardHistory = new newTaskManager(
+                element.id,
+                element.data().title,
+                element.data().mode,
+                element.data().description
+            )
+        });
+    })
+}
+
 function newTaskManager(ID, name, privacity, description) {
 
     this.divParent = document.getElementById('container')
@@ -7,13 +26,12 @@ function newTaskManager(ID, name, privacity, description) {
     this.cardDivSubTitle = document.createElement('h6')
     this.cardDivText = document.createElement('p')
 
-    this.IDCard = ID // database
     this.cardID = {
-        cardDad: 'card-' + this.IDCard,
-        cardBody: 'card-body-' + this.IDCard,
-        cardTitle: 'card-body-title' + this.IDCard,
-        cardSubTitle: 'card-body-title-sub' + this.IDCard,
-        cardText: 'card-body-title-sub-text' + this.IDCard
+        cardDad: 'card-' + ID,
+        cardBody: 'card-body-' + ID,
+        cardTitle: 'card-body-title' + ID,
+        cardSubTitle: 'card-body-title-sub' + ID,
+        cardText: 'card-body-title-sub-text' + ID
     }
 
     this.cardDiv.className = "card float-left mt-3 ml-3 d-inline-block"
@@ -47,7 +65,6 @@ function newTaskManager(ID, name, privacity, description) {
 }
 
 document.getElementById("btn-new-task").addEventListener('click', () => {
-    let db = firebase.firestore()
 
     let infoModal = {
         nameTask: document.getElementById('name-new-task').value,
