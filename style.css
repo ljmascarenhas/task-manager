@@ -3,6 +3,12 @@
     width: 100px;
 }
 
+.btn-add-task {
+    /* position: absolute; */ 
+    display: inline-block; 
+    margin-left: auto;
+}
+
 #container {
-    width: 500px;
+    width: 100%;
 }
