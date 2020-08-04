@@ -12,3 +12,27 @@
 #container {
     width: 100%;
 }
+
+.classButton {
+    background-color: white;
+    border: 1px #ff6700 solid;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.classButton:hover {
+    background-color: #ff6700;
+    border: none;
+    color: white;
+    font-weight: 500;
+}
+
+.bgColorUrgency{
+    border-color: #ff6700;
+}
+.bgColorModerate{
+    border-color: #FFC107;
+}
+.bgColorCommon{
+    
+}

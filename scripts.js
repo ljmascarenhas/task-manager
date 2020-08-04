@@ -3,10 +3,6 @@ let db = firebase.firestore()
 function getCollection() {
     db.collection("task").get().then( (querySnapshot) => {
         querySnapshot.forEach(element => {
-            console.log(element.id)
-            console.log(element.data().title)
-            console.log(element.data().mode)
-            console.log(element.data().description)
             let cardHistory = new newTaskManager(
                 element.id,
                 element.data().title,
@@ -17,7 +13,7 @@ function getCollection() {
     })
 }
 
-function newTaskManager(ID, name, privacity, description) {
+function newTaskManager(ID, name, privacity, urgency, description) {
 
     this.divParent = document.getElementById('container')
     this.cardDiv = document.createElement('div')
@@ -33,11 +29,16 @@ function newTaskManager(ID, name, privacity, description) {
         cardSubTitle: 'card-body-title-sub' + ID,
         cardText: 'card-body-title-sub-text' + ID
     }
-
-    this.cardDiv.className = "card float-left mt-3 ml-3 d-inline-block"
+    if(urgency == 'urgency') {
+        this.cardDiv.className = "card float-left mt-3 ml-3 d-inline-block bgColorUrgency"
+    } else if(urgency == 'moderate') {
+        this.cardDiv.className = "card float-left mt-3 ml-3 d-inline-block bgColorModerate"
+    } else {
+        this.cardDiv.className = "card float-left mt-3 ml-3 d-inline-block"
+    }
     this.cardDivBody.className = "card-body p-3"
-    this.cardDivTitle.className = "card-title"
-    this.cardDivSubTitle.className = "card-subtitle card-subtitle mb-2 text-muted"
+    this.cardDivTitle.className = "card-title p-2"
+    this.cardDivSubTitle.className = "card-subtitle card-subtitle mb-2 text-muted mt-3"
     this.cardDivText.className = "card-text"
 
     this.cardDiv.style = "auto"
@@ -64,11 +65,29 @@ function newTaskManager(ID, name, privacity, description) {
 
 }
 
+function msgSucessOrError(typeMsg, msg) {
+    this.divMsgSucess = document.createElement('div')
+    this.divMsgSucess.className = typeMsg
+    this.divMsgSucess.setAttribute('role', 'alert')
+    this.divMsgSucess.innerHTML = msg
+
+    this.divMsgSucess.id = "idModal"
+
+    this.divMsgSucess.style.display = 'flex'
+
+    document.getElementById('container').appendChild(this.divMsgSucess)
+
+    setTimeout(function(){
+        document.getElementById("idModal").style.display = 'none'
+    }, 3000)
+}
+
 document.getElementById("btn-new-task").addEventListener('click', () => {
 
     let infoModal = {
         nameTask: document.getElementById('name-new-task').value,
         privacity: document.getElementById('privacity').value,
+        urgency: document.getElementById('infoUrgency').value,
         description: document.getElementById('description-new-task').value
     }
 
@@ -81,12 +100,13 @@ document.getElementById("btn-new-task").addEventListener('click', () => {
     db.collection('task').add({
         title: infoModal.nameTask,
         mode: infoModal.privacity,
+        urgency: infoModal.urgency,
         description: infoModal.description
     }).then( elem => {
-        let card1 = new newTaskManager(elem.id, infoModal.nameTask, infoModal.privacity, infoModal.description)
+        new msgSucessOrError("alert alert-success fixed-bottom", "Nota salva com sucesso!")
+        new newTaskManager(elem.id, infoModal.nameTask, infoModal.privacity, infoModal.urgency, infoModal.description)
     }).catch( err => {
-        console.error("Erro ao add o documento.")
+        new msgSucessOrError("alert alert-danger", "Ocorreu um problema ao salvar sua nota!")
     })
-
-
 })
+

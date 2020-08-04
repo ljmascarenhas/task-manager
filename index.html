@@ -20,10 +20,15 @@
             <img id="logo-header" src="assets/img/logo.png">
         </section>
         <section class="btn-add-task">
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="classButton mr-4" data-toggle="modal" data-target="#exampleModal">
                 <i class="material-icons align-middle"> add </i>
             </button>
         </section>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button id="bnt-search" class="classButton">Buscar</button>
+            <!-- <button id="" class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button> -->
+          </form>
     </header>
 
 
@@ -45,8 +50,15 @@
                         </div>
                         <div class="form-group">
                             <select class="custom-select mr-sm-2" id="privacity">
+                                <option value="public" selected>Pública</option>
                                 <option value="privite">Privada</option>
-                                <option value="public">Pública</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="custom-select mr-sm-2" id="infoUrgency">
+                                <option value="urgency">Urgente</option>
+                                <option value="moderate">Moderado</option>
+                                <option value="common" selected>Comum</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -57,12 +69,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-new-task" data-dismiss="modal">Salvar
+                    <button type="button" class="btn classButton" id="btn-new-task" data-dismiss="modal">Salvar
                         Nota</button>
                 </div>
             </div>
         </div>
     </section>
+
 
     <section class="p-3 mt-4" id="container">
 
